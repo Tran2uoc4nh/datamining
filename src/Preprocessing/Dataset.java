@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 
 public class Dataset {
     private LinkedHashMap<String, Data> data;
@@ -297,4 +298,55 @@ public class Dataset {
         System.out.println("Removed " + removedLines + " lines as outliers.");
     }
 
+    
+    public void scaleMultipleColumn(String[] labelsName, double minRange, double maxRange) {
+        // Define decimal format for one decimal place
+        DecimalFormat df = new DecimalFormat("#0.000");
+
+        for (String labelName : labelsName) {
+            // Find the index of the label
+            labelName = "\""+labelName+"\"";
+            System.out.println("Current label: " + labelName + " scaling");
+            int index = -1;
+            for (int i = 0; i < labels.length; i++) {
+                if (labels[i].equals(labelName)) {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1) {
+                System.out.println("Label " + labelName + " not found.");
+                continue;
+            }
+
+            // Extract values of the specified column
+            double[] columnValues = new double[data.size()];
+            int i = 0;
+            for (Data rowData : data.values()) {
+                String value = rowData.get(labelName);
+                if (value != null && !value.isEmpty()) {
+                    columnValues[i++] = Double.parseDouble(value);
+                }
+            }
+
+            // Find min and max values in the column
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+            for (double value : columnValues) {
+                min = Math.min(min, value);
+                max = Math.max(max, value);
+            }
+
+            // Scale values to the specified range
+            double range = max - min;
+            for (Data rowData : data.values()) {
+                String value = rowData.get(labelName);
+                if (value != null && !value.isEmpty()) {
+                    double scaledValue = minRange + ((Double.parseDouble(value) - min) / range) * (maxRange - minRange);
+                    rowData.update(labelName, df.format(scaledValue)); // Format scaled value
+                }
+            }
+            System.out.println("Done");
+        }
+    }
 }

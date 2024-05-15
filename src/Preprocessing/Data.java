@@ -16,6 +16,10 @@ public class Data {
         return data.get(label);
     }
 
+    public void update(String label, String value) {
+        data.put(label, value);
+    }
+
     public void displayData() {
         for (String key : data.keySet()) {
             System.out.print(key + ": " + data.get(key) + " ");

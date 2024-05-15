@@ -89,6 +89,13 @@ public class Preprocessing {
         System.out.println("Outliers removed from the dataset.");
     }
 
+    public void scale() {
+        double minValue = 0;
+        double maxValue = 1;
+        String[] labels = { "T.MAX", "T.MIN" };
+        dataset.scaleMultipleColumn(labels, minValue, maxValue);
+    }
+
     public void printDash() {
         System.out.println("--------------------------------------------------------------------------------");
     }
@@ -130,6 +137,10 @@ public class Preprocessing {
 
         System.out.println("Dropping Outlier");
         removeOutliers();
+        printDash();
+
+        System.out.println("Scaling");
+        scale();
         printDash();
 
         System.out.println("Preprocess successfully");
