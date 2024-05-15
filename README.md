@@ -18,6 +18,7 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
 ## Preprocessing 
 **Input**: IND,RAIN,IND.1,T.MAX,IND.2,T.MIN,T.MIN.G
+
 **Output**: WIND
 **Insignificant feature**: DATE
 - Load data, read data : LoadData(), printTop10Data()
