@@ -3,7 +3,7 @@ package Preprocessing;
 public class Preprocessing {
     private Dataset dataset;
     private double[][] statistics;
-    private final double threshold = 1.5;
+    private final double threshold = 2;
     private String filePath;
 
     public Preprocessing(String filePath) {
@@ -89,18 +89,55 @@ public class Preprocessing {
         System.out.println("Outliers removed from the dataset.");
     }
 
+    public void printDash() {
+        System.out.println("--------------------------------------------------------------------------------");
+    }
+
+    public void printCorrelationMatrix() {
+        CorrelationMatrixGenerator c = new CorrelationMatrixGenerator(dataset);
+        c.generateAndPrintCorrelationMatrix();
+    }
+
     public void start() {
+        printDash();
         System.out.println("Open file" + filePath);
         loadData(filePath);
+        printDash();
+
         System.out.println("Cleaning Data");
         cleanData();
+        printDash();
+
         System.out.println("Drop DATE column!");
         removeLabel("DATE");
+        printDash();
+
+        // System.out.println("Drop IND column!");
+        // removeLabel("IND");
+        // printDash();
+
+        // System.out.println("Drop IND.1 column!");
+        // removeLabel("IND.1");
+        // printDash();
+
+        // System.out.println("Drop IND.2 column!");
+        // removeLabel("IND.2");
+        // printDash();
+
         System.out.println("Using IQR: ");
         printIQR();
+        printDash();
+
         System.out.println("Dropping Outlier");
         removeOutliers();
+        printDash();
+
         System.out.println("Preprocess successfully");
         saveToCSV();
+        printDash();
+
+        System.out.println("Heatmap: ");
+        printCorrelationMatrix();
+        printDash();
     }
 }

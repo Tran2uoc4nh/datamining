@@ -18,6 +18,10 @@ public class Dataset {
         loadData(url);
     }
 
+    public LinkedHashMap<String, Data> getData() {
+        return data;
+    }
+
     public String[] getLabelStrings() {
         return labels;
     }
@@ -180,7 +184,7 @@ public class Dataset {
     }
 
     public void saveToCSV() {
-        String filePath = "C:/Users/Admin/Desktop/data mining/project/src/Data/cleanedData.csv";
+        String filePath = "C:\\Users\\Admin\\Desktop\\data mining\\project\\src\\Data\\cleanedData.csv";
         try {
             if (Files.exists(Paths.get(filePath))) {
                 Files.delete(Paths.get(filePath));
