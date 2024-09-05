@@ -1,0 +1,2 @@
+def chaoconmemay():
+    print('chào')
